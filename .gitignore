@@ -1,10 +1,43 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# ------------------------------
+# 1. CORE PROJECT EXCLUSIONS
+# ------------------------------
 
-# Virtual environments
-.venv
+# Hugging Face Model Cache & Weights (CRITICAL: Do not push models)
+local_models_cache/
+
+# Virtual Environment & Tooling Caches
+.venv/                  # uv's default virtual environment
+.uv/                    # uv's isolated execution cache
+uv.log                  # uv log files
+__pycache__/
+*.pyc
+.mypy_cache/            # Mypy type checker cache
+.pytest_cache/          # Pytest testing cache
+
+# ------------------------------
+# 2. DATA & DATABASE ARTIFACTS
+# ------------------------------
+
+# # User Data and Processed Artifacts (PRIVACY & SIZE)
+# /src/ds hereata/              # If you plan to store raw data file
+# /src/db/                # Local database files (e.g., ChromaDB persistence directory)
+
+# ------------------------------
+# 3. APPLICATION & LOGS
+# ------------------------------
+
+.streamlit/             # Streamlit local session/cache files
+/logs/                  # Dedicated logging directory
+
+# ------------------------------
+# 4. OS & IDE ARTIFACTS
+# ------------------------------
+
+.DS_Store               # macOS filesystem metadata
+Thumbs.db               # Windows thumbnail cache
+*.bak
+*~
+
+# VS Code settings (optional but recommended)
+.vscode/settings.json
+.vscode/*.log

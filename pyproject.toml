@@ -16,13 +16,12 @@ dependencies = [
     "langchain",
     "langchain-community",
     "sentence-transformers",
-    
     # Vector Database & Document Loader
     "chromadb", # Local Vector Database (FAISS is an alternative)
-    "pypdf",    # For loading PDF documents
-    
+    "pypdf", # For loading PDF documents
     # Utility & Frontend
     "huggingface-hub",
     "tqdm",
     "streamlit",
+    "pdfplumber>=0.11.7",
 ]
