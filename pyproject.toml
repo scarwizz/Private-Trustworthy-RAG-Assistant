@@ -1,0 +1,28 @@
+# pyproject.toml
+
+[project]
+name = "tai"
+version = "0.1.0"
+description = "A local, trustworthy RAG-based AI assistant."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Your Name" }]
+
+dependencies = [
+    # Core ML/RAG Libraries
+    "torch",
+    "transformers",
+    "accelerate",
+    "langchain",
+    "langchain-community",
+    "sentence-transformers",
+    
+    # Vector Database & Document Loader
+    "chromadb", # Local Vector Database (FAISS is an alternative)
+    "pypdf",    # For loading PDF documents
+    
+    # Utility & Frontend
+    "huggingface-hub",
+    "tqdm",
+    "streamlit",
+]
