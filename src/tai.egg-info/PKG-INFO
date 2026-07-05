@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: tai
+Version: 0.1.0
+Summary: A local, trustworthy RAG-based AI assistant.
+Author: Your Name
+License: MIT
+Project-URL: Homepage, https://github.com/your-org/private-trustworthy-rag-assistant
+Requires-Python: >=3.10
+Requires-Dist: torch
+Requires-Dist: transformers
+Requires-Dist: accelerate
+Requires-Dist: langchain
+Requires-Dist: langchain-community
+Requires-Dist: sentence-transformers
+Requires-Dist: chromadb
+Requires-Dist: pypdf
+Requires-Dist: huggingface-hub
+Requires-Dist: tqdm
+Requires-Dist: streamlit
+Requires-Dist: pdfplumber>=0.11.7
+Requires-Dist: fastapi
+Requires-Dist: uvicorn[standard]
+Requires-Dist: httpx
+Requires-Dist: python-multipart>=0.0.32

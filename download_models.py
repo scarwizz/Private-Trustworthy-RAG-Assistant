@@ -23,7 +23,9 @@ except ImportError:
 
 # --- 2. Configuration Variables ---
 # Note: We use the *Hugging Face model IDs* for download, as they are the source.
-EMBEDDING_MODEL_ID = "google/embeddinggemma-300M"
+# EMBEDDING_MODEL_ID = "google/embeddinggemma-300M"
+EMBEDDING_MODEL_ID = "BAAI/bge-base-en-v1.5"
+
 SLM_MODEL_ID = "google/flan-t5-base"
 
 # The cache location will be a subdirectory of D:\TAI

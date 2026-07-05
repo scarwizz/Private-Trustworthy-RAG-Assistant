@@ -4,7 +4,8 @@
 
 # Hugging Face Model Cache & Weights (CRITICAL: Do not push models)
 local_models_cache/
-
+models/
+chroma_db/
 # Virtual Environment & Tooling Caches
 .venv/                  # uv's default virtual environment
 .uv/                    # uv's isolated execution cache

@@ -1,0 +1,24 @@
+All files have been successfully created/updated:
+
+1. README.md - Comprehensive project documentation
+2. .gitignore - Comprehensive gitignore for Python/ML projects
+3. scripts/test_health.py - Fixed health check script that now:
+   - Uses correct endpoint paths (/api/v1/health and /api/v1/query)
+   - Sends the correct JSON payload matching the QueryRequest schema (field "query" not "question")
+   - Includes improved error reporting for 422 validation errors
+   - Fixed syntax error in argument parser
+
+The test_health.py script should now work correctly when:
+
+
+Start your the backend,./src/api/main/app.py
+   uvicorn src/api.ma pplications
+   then run the health check:
+   python scripts/test_health.py
+
+If the health check passes but the query fails, check that:
+   1. Your vector store has been initialized with some documents (ingest some docs first)
+   2. The embedding model and LLM are properly loaded
+   3. The RAG pipeline is correctly wired in the service
+
+The project is now ready for GitHub release.

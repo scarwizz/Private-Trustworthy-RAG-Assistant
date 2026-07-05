@@ -1,0 +1,16 @@
+torch
+transformers
+accelerate
+langchain
+langchain-community
+sentence-transformers
+chromadb
+pypdf
+huggingface-hub
+tqdm
+streamlit
+pdfplumber>=0.11.7
+fastapi
+uvicorn[standard]
+httpx
+python-multipart>=0.0.32

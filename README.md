@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TAI Assistant - Private Trustworthy RAG Assistant
 
 A fully local, privacy-preserving Retrieval-Augmented Generation (RAG) system that runs entirely offline on your machine. No cloud services, no API calls, no data leaving your device.
@@ -383,3 +384,148 @@ For issues or questions:
 **Last Updated:** November 2025  
 **Status:** Active Development  
 **Package Manager:** UV
+=======
+# Private-Trustworthy-RAG-Assistant
+
+A local, private, and trustworthy Retrieval-Augmented Generation (RAG) assistant that runs entirely offline on your machine. This project implements a state-of-the-art RAG pipeline with advanced retrieval techniques, including semantic chunking, query transformation (HyDE + routing), hybrid search (dense + sparse with RRF), and cross-encoder re-ranking.
+
+## Features
+
+- **100% Private & Offline**: All processing (embedding, retrieval, generation) happens locally. No data leaves your machine.
+- **Advanced RAG Pipeline**:
+  - **Semantic Chunking**: Splits text based on semantic similarity using sentence embeddings.
+  - **Query Transformation**: Uses HyDE (Hypothetical Document Embeddings) and query routing (definitional/procedural).
+  - **Hybrid Search**: Combines dense vector search (ChromaDB with BGE embeddings) and sparse BM25 search, fused with Reciprocal Rank Fusion (RRF).
+  - **Cross-Encoder Re-Ranking**: Re-ranks fused results using a lightweight cross-encoder for improved relevance.
+- **Explainability**: Provides source citations, confidence scores, and context preview for transparency.
+- **Modular & Extensible**: Clean separation of concerns with well-defined interfaces.
+- **Streamlit UI**: Intuitive chat interface for interacting with your local knowledge base.
+- **FastAPI Backend**: High-performance asynchronous API for serving the RAG pipeline.
+
+## Architecture
+
+```mermaid
+graph TD
+    A[User Query] --> B(Query Transformer)
+    B --> C{HyDE Transform}
+    B --> D{Query Routing}
+    C --> E[Hybrid Search]
+    D --> E
+    E --> F[Dense Retrieval (ChromaDB/BGE)]
+    E --> G[Sparse Retrieval (BM25)]
+    F & G --> H[RRF Fusion]
+    H --> I[Cross-Encoder Re-Ranking]
+    I --> J[Context Assembly]
+    J --> K[LLM Generation (Phi-3 GGUF)]
+    K --> L[Answer with Sources]
+```
+
+## Installation
+
+### Prerequisites
+
+- Python 3.11 or higher
+- Git
+- [uv](https://github.com/astral-sh/uv) (for fast package installation) or pip
+
+### Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/Private-Trustworthy-RAG-Assistant.git
+   cd Private-Trustworthy-RAG-Assistant
+   ```
+
+2. **Install dependencies** (using uv):
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+   Or with pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Download the GGUF model**:
+   The pipeline uses the [Phi-3-mini-4k-instruct-Q4_K_M.gguf](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf) model.
+   Place the downloaded `.gguf` file in the `models/` directory.
+
+   ```bash
+   mkdir -p models
+   # Download the model and place it in models/
+   # Example: wget -O models/Phi-3-mini-4k-instruct-q4_k_m.gguf "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4_k_m.gguf"
+   ```
+
+4. **Initialize the embedding model**:
+   The BGE embedding model will be downloaded automatically on first run to `local_models_cache/`.
+
+## Usage
+
+### Start the Backend (FastAPI)
+
+```bash
+uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+```
+
+### Start the Frontend (Streamlit)
+
+```bash
+streamlit run src/ui/app.py
+```
+
+Open your browser to `http://localhost:8501` to interact with the chat interface.
+
+### Adding Documents
+
+1. Place your documents (PDF, TXT, MD) in the `docs/` directory.
+2. Use the "Upload files" section in the Streamlit sidebar to ingest documents into the knowledge base.
+   Alternatively, you can run the ingestion script:
+   ```bash
+   python src/data/ingest.py --docs-dir ./docs
+   ```
+
+## Configuration
+
+Configuration is managed via `src/utils/config.py`. Key settings include:
+
+- **Embedding Model**: `BAAI/bge-base-en-v1.5` (local)
+- **LLM Model**: Phi-3-mini-4k-instruct (GGUF)
+- **Vector Store**: ChromaDB (with FAISS fallback)
+- **Chunking**: Semantic chunking with dynamic threshold
+- **Retrieval**: Hybrid (Dense + Sparse) with RRF
+- **Re-ranking**: Cross-encoder (ms-marco-MiniLM-L-6-v2)
+
+## Development
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Style
+
+We use `ruff` for linting and formatting. To check and fix:
+
+```bash
+ruff check .
+ruff format .
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Phi-3](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) by Microsoft
+- [BAAI/bge-base-en-v1.5](https://huggingface.co/BAAI/bge-base-en-v1.5) for embeddings
+- [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) for GGUF inference
+- [ChromaDB](https://www.trychroma.com/) for vector storage
+- [rank-bm25](https://github.com/dorianbrown/rank_bm25) for sparse retrieval
+- [sentence-transformers](https://www.sbert.net/) for cross-encoder re-ranking
+- [Streamlit](https://streamlit.io/) and [FastAPI](https://fastapi.tiangolo.com/) for the UI and API
+
+## Disclaimer
+
+This software is for educational and research purposes only. While designed to be private and secure, users are responsible for ensuring compliance with applicable laws and regulations when processing sensitive data.
+>>>>>>> a1dc2fd (feat: implement phase 3 advanced RAG architecture with FastAPI, GGUF, and Hybrid Search)

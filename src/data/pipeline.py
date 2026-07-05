@@ -76,7 +76,10 @@ def ingest_directory(
         # chunk
         chunks = chunk_text(text, max_chunk_chars=chunk_size, overlap_chars=chunk_overlap)
         texts = [c["text"] for c in chunks]
-        embeddings = embedder.embed_texts(texts)
+        # embeddings = EmbedStore.encode(texts, normalize_embeddings=True)
+        embeddings = store.generator.encode(texts)
+
+
         records = []
         for c, emb in zip(chunks, embeddings):
             records.append({
@@ -97,7 +100,7 @@ def ingest_directory(
 # CLI for quick use
 if __name__ == "__main__":
     import argparse
-    from src.utils.config import Config
+    from src.utils.config import CONFIG
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", "-i", required=True, help="file or directory to ingest")
@@ -110,14 +113,39 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=32)
     args = parser.parse_args()
 
-    cfg = Config()
-    # instantiate embedder
-    embedder = GemmaEmbeddings(model_name=cfg.gemma_model_path, device=None, local_only=True, batch_size=args.batch_size)
-    store = EmbedStore(use_chroma=args.use_chroma, chroma_dir=args.chroma_dir, faiss_dir=args.faiss_dir, embedding_dim=embedder.dim or 1536)
+    embedder = GemmaEmbeddings(
+        model_name=CONFIG["MODELS"]["EMBEDDING_MODEL"],
+        device=None,
+        local_only=True,
+        batch_size=args.batch_size
+    )
+
+    store = EmbedStore(
+        use_chroma=args.use_chroma,
+        chroma_dir=args.chroma_dir,
+        faiss_dir=args.faiss_dir,
+        embedding_dim=getattr(embedder, "dim", 768)
+    )
+
     encryptor = Encryptor() if args.encrypt else None
 
     inp = Path(args.input)
     if inp.is_dir():
-        ingest_directory(str(inp), embedder, store, recursive=True, chunk_size=args.chunk_size, chunk_overlap=args.overlap, encryptor=encryptor)
+        ingest_directory(
+            str(inp),
+            embedder,
+            store,
+            recursive=True,
+            chunk_size=args.chunk_size,
+            chunk_overlap=args.overlap,
+            encryptor=encryptor
+        )
     else:
-        ingest_document(str(inp), embedder, store, chunk_size=args.chunk_size, chunk_overlap=args.overlap, encryptor=encryptor)
+        ingest_document(
+            str(inp),
+            embedder,
+            store,
+            chunk_size=args.chunk_size,
+            chunk_overlap=args.overlap,
+            encryptor=encryptor
+        )
